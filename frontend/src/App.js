@@ -34,6 +34,11 @@ import AdminPaybox from "./pages/admin/AdminPaybox";
 import AdminRefund from "./pages/admin/AdminRefund";
 import AdminCoupons from "./pages/admin/AdminCoupons";
 import AdminChat from "./pages/admin/AdminChat";
+import AdminAIChat from "./pages/admin/AdminAIChat";
+import AIChatTestPage from "./pages/AIChatTestPage";
+
+// Components
+import FloatingChatButton from "./components/FloatingChatButton";
 
 // Context providers
 import { ProductsProvider } from "./context/productsContext";
@@ -89,6 +94,7 @@ const AppContent = () => {
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/user/chat" element={<UserChat />} />
                         <Route path="/favorites" element={<FavoritesPage />} />
+                        <Route path="/ai-chat-test" element={<AIChatTestPage />} />
                       </Routes>
                     </Container>
                   ) : (
@@ -101,6 +107,7 @@ const AppContent = () => {
                       <Route path="/admin/brands" element={<ProtectedRoute adminOnly={true}><AdminBrands /></ProtectedRoute>} />
                       <Route path="/admin/reviews" element={<ProtectedRoute adminOnly={true}><AdminReviews /></ProtectedRoute>} />
                       <Route path="/admin/chat" element={<ProtectedRoute adminOnly={true}><AdminChat /></ProtectedRoute>} />
+                      <Route path="/admin/ai-chat" element={<ProtectedRoute adminOnly={true}><AdminAIChat /></ProtectedRoute>} />
                       <Route path="/admin/paybox" element={<ProtectedRoute adminOnly={true}><AdminPaybox /></ProtectedRoute>} />
                       <Route path="/admin/refunds" element={<ProtectedRoute adminOnly={true}><AdminRefund /></ProtectedRoute>} />
                       <Route path="/admin/coupons" element={<ProtectedRoute adminOnly={true}><AdminCoupons /></ProtectedRoute>} />
@@ -111,6 +118,7 @@ const AppContent = () => {
             </ProductsProvider>
           </main>
           {!isAdminRoute && <Footer />}
+          {!isAdminRoute && <FloatingChatButton />}
         </PayboxProvider>
       </UserProvider>
     </div>

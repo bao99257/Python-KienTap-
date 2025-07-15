@@ -141,6 +141,17 @@ const AdminSidebar = () => {
           <Nav.Item>
             <Nav.Link
               as={Link}
+              to="/admin/ai-chat"
+              className={`sidebar-link ${isActive('/admin/ai-chat') ? 'active' : ''}`}
+            >
+              <i className="fas fa-robot"></i>
+              AI Chat
+            </Nav.Link>
+          </Nav.Item>
+
+          <Nav.Item>
+            <Nav.Link
+              as={Link}
               to="/admin/refunds"
               className={`sidebar-link ${isActive('/admin/refunds') ? 'active' : ''}`}
             >

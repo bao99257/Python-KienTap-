@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: ecommerce_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  # Django Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    volumes:
+      - ./static:/app/static
+      - ./media:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=your-secret-key-here
+      - DATABASE_URL=postgresql://postgres:postgres123@db:5432/ecommerce_db
+      - REDIS_URL=redis://redis:6379/0
+      - ALLOWED_HOSTS=localhost,127.0.0.1,your-domain.com
+      - STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key
+      - STRIPE_SECRET_KEY=your-stripe-secret-key
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn --bind 0.0.0.0:8000 backend.wsgi:application"
+
+  # React Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

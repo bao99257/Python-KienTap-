@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'api',
     'channels',
     'chat',
+    'ai_chat',
     'rest_framework_simplejwt.token_blacklist',
 ]
 
