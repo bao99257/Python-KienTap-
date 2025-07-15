@@ -19,6 +19,26 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.title
 
+class SubCategory(models.Model):
+    """Phân loại chi tiết sản phẩm (áo thun, áo sơ mi, quần jean, quần short...)"""
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
+    title = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    keywords = models.TextField(help_text="Từ khóa tìm kiếm, cách nhau bởi dấu phẩy", blank=True)
+
+    class Meta:
+        verbose_name = "Phân loại chi tiết"
+        verbose_name_plural = "Phân loại chi tiết"
+
+    def __str__(self):
+        return f"{self.category.title} - {self.title}"
+
+    def get_keywords_list(self):
+        """Trả về list keywords"""
+        if self.keywords:
+            return [k.strip().lower() for k in self.keywords.split(',')]
+        return []
+
 
 
 class Brand(models.Model):
@@ -55,6 +75,35 @@ class Size(models.Model):
         verbose_name_plural = "Kích cỡ"
         ordering = ['order', 'name']
 
+class SizeGuide(models.Model):
+    """Hướng dẫn size chi tiết cho từng subcategory"""
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='size_guides')
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    height_min = models.IntegerField(help_text="Chiều cao tối thiểu (cm)", null=True, blank=True)
+    height_max = models.IntegerField(help_text="Chiều cao tối đa (cm)", null=True, blank=True)
+    weight_min = models.IntegerField(help_text="Cân nặng tối thiểu (kg)", null=True, blank=True)
+    weight_max = models.IntegerField(help_text="Cân nặng tối đa (kg)", null=True, blank=True)
+    chest = models.CharField(max_length=20, help_text="Vòng ngực (cm)", blank=True)
+    waist = models.CharField(max_length=20, help_text="Vòng eo (cm)", blank=True)
+    notes = models.TextField(help_text="Ghi chú thêm (form rộng/hẹp)", blank=True)
+
+    class Meta:
+        verbose_name = "Hướng dẫn size"
+        verbose_name_plural = "Hướng dẫn size"
+        unique_together = ['subcategory', 'size']
+
+    def __str__(self):
+        return f"{self.subcategory} - Size {self.size.name}"
+
+    def get_height_range(self):
+        if self.height_min and self.height_max:
+            return f"{self.height_min}-{self.height_max}cm"
+        return ""
+
+    def get_weight_range(self):
+        if self.weight_min and self.weight_max:
+            return f"{self.weight_min}-{self.weight_max}kg"
+        return ""
 
 class Product(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
@@ -62,6 +111,7 @@ class Product(models.Model):
     image = models.ImageField(null=True, blank=True, default='/placeholder.png')
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True, help_text="Phân loại chi tiết")
     description = models.TextField(null=True, blank=True)
     rating = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
     numReviews = models.IntegerField(null=True, blank=True, default=0)

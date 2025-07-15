@@ -64,15 +64,26 @@ function PlacerOrderPage() {
               ) : (
                 <ListGroup variant="flush">
                   {productsInCart.map((product) => (
-                    <ListGroup.Item key={product.uniqueKey || product.id} className="d-flex align-items-center">
+                    <ListGroup.Item
+                      key={product.uniqueKey || product.id}
+                      className="d-flex align-items-center"
+                    >
                       <Image
                         src={product.image}
                         alt={product.name}
                         rounded
-                        style={{ width: "60px", height: "60px", objectFit: "cover", marginRight: "12px" }}
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          objectFit: "cover",
+                          marginRight: "12px",
+                        }}
                       />
                       <div className="flex-grow-1">
-                        <Link to={`/product/${product.id}`} className="text-decoration-none fw-semibold">
+                        <Link
+                          to={`/#/products/${product.id}`}
+                          className="text-decoration-none fw-semibold"
+                        >
                           {product.name}
                         </Link>
                         {(product.color || product.size) && (
@@ -85,7 +96,9 @@ function PlacerOrderPage() {
                         )}
                         <div className="text-muted small">
                           {product.qty} × {formatVND(product.price)} ={" "}
-                          <span className="fw-semibold">{formatVND(product.qty * product.price)}</span>
+                          <span className="fw-semibold">
+                            {formatVND(product.qty * product.price)}
+                          </span>
                         </div>
                       </div>
                     </ListGroup.Item>
@@ -128,18 +141,26 @@ function PlacerOrderPage() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Giảm giá</Col>
-                    <Col className="text-success">- {formatVND(discountAmount)}</Col>
+                    <Col className="text-success">
+                      - {formatVND(discountAmount)}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
               )}
 
               <ListGroup.Item>
                 <Row>
-                  <Col><strong>Tổng cộng</strong></Col>
                   <Col>
-                    <strong className="text-primary">{formatVND(totalAfterDiscount)}</strong>
+                    <strong>Tổng cộng</strong>
+                  </Col>
+                  <Col>
+                    <strong className="text-primary">
+                      {formatVND(totalAfterDiscount)}
+                    </strong>
                     {discountAmount > 0 && (
-                      <div className="text-success small">(Đã áp dụng mã giảm giá)</div>
+                      <div className="text-success small">
+                        (Đã áp dụng mã giảm giá)
+                      </div>
                     )}
                   </Col>
                 </Row>
@@ -161,7 +182,10 @@ function PlacerOrderPage() {
 
           <Message variant="info">
             {totalItemsPrice <= CURRENCY.FREE_SHIPPING_THRESHOLD ? (
-              <>Miễn phí vận chuyển với đơn hàng từ {formatVND(CURRENCY.FREE_SHIPPING_THRESHOLD)}.</>
+              <>
+                Miễn phí vận chuyển với đơn hàng từ{" "}
+                {formatVND(CURRENCY.FREE_SHIPPING_THRESHOLD)}.
+              </>
             ) : (
               "Đơn hàng này được miễn phí vận chuyển!"
             )}

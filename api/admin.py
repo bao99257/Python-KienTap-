@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils import timezone
-from .models import Product, Order, RefundRequest, PayboxWallet, PayboxTransaction, Color, Size, ProductVariant
+from .models import Product, Order, RefundRequest, PayboxWallet, PayboxTransaction, Color, Size, ProductVariant, SubCategory, SizeGuide
 
 # Action: Chấp nhận hoàn tiền
 @admin.action(description="✅ Chấp nhận hoàn tiền")
@@ -79,6 +79,18 @@ class ProductAdmin(admin.ModelAdmin):
         return obj.get_total_stock()
     get_total_stock.short_description = 'Tổng tồn kho'
 
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'description']
+    list_filter = ['category']
+    search_fields = ['title', 'keywords']
+
+@admin.register(SizeGuide)
+class SizeGuideAdmin(admin.ModelAdmin):
+    list_display = ['subcategory', 'size', 'height_min', 'height_max', 'weight_min', 'weight_max']
+    list_filter = ['subcategory', 'size']
+    search_fields = ['subcategory__title', 'size__name']
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):

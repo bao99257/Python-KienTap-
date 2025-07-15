@@ -1,0 +1,275 @@
+.admin-flash-sale {
+  padding: 20px 0;
+}
+
+.admin-flash-sale h2 {
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.admin-flash-sale h2 i {
+  color: #ff6b6b;
+}
+
+.admin-flash-sale .card {
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.admin-flash-sale .card-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 12px 12px 0 0 !important;
+  border: none;
+  padding: 15px 20px;
+}
+
+.admin-flash-sale .card-header h5 {
+  font-weight: 600;
+}
+
+.admin-flash-sale .table {
+  margin-bottom: 0;
+}
+
+.admin-flash-sale .table th {
+  background-color: #f8f9fa;
+  border-top: none;
+  font-weight: 600;
+  color: #495057;
+  padding: 15px 12px;
+}
+
+.admin-flash-sale .table td {
+  padding: 15px 12px;
+  vertical-align: middle;
+}
+
+.admin-flash-sale .table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.admin-flash-sale .btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.admin-flash-sale .btn:hover {
+  transform: translateY(-1px);
+}
+
+.admin-flash-sale .btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+}
+
+.admin-flash-sale .btn-primary:hover {
+  background: linear-gradient(135deg, #5a6fd8, #6a4190);
+}
+
+.admin-flash-sale .btn-outline-primary {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.admin-flash-sale .btn-outline-primary:hover {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.admin-flash-sale .btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.admin-flash-sale .btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.admin-flash-sale .btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.admin-flash-sale .btn-outline-danger:hover {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.admin-flash-sale .badge {
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 20px;
+}
+
+.admin-flash-sale .modal-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 8px 8px 0 0;
+  border: none;
+}
+
+.admin-flash-sale .modal-header .btn-close {
+  filter: invert(1);
+}
+
+.admin-flash-sale .modal-title {
+  font-weight: 600;
+}
+
+.admin-flash-sale .modal-body {
+  padding: 25px;
+}
+
+.admin-flash-sale .modal-footer {
+  border-top: 1px solid #e9ecef;
+  padding: 15px 25px;
+}
+
+.admin-flash-sale .form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+.admin-flash-sale .form-control {
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+}
+
+.admin-flash-sale .form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.admin-flash-sale .form-check-input:checked {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.admin-flash-sale .alert {
+  border-radius: 10px;
+  border: none;
+  padding: 15px 20px;
+}
+
+.admin-flash-sale .alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Empty state */
+.admin-flash-sale .text-center.py-4 {
+  padding: 60px 20px !important;
+}
+
+.admin-flash-sale .text-center.py-4 i {
+  margin-bottom: 20px;
+}
+
+.admin-flash-sale .text-center.py-4 h5 {
+  color: #495057;
+  margin-bottom: 10px;
+}
+
+.admin-flash-sale .text-center.py-4 p {
+  margin-bottom: 25px;
+}
+
+/* Loading state */
+.admin-flash-sale .text-center.py-5 {
+  padding: 80px 20px !important;
+}
+
+.admin-flash-sale .text-center.py-5 p {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Action buttons group */
+.admin-flash-sale .d-flex.gap-2 {
+  gap: 8px !important;
+}
+
+.admin-flash-sale .d-flex.gap-2 .btn {
+  padding: 6px 10px;
+  font-size: 0.875rem;
+}
+
+/* Status badges */
+.admin-flash-sale .badge.bg-info {
+  background-color: #0dcaf0 !important;
+}
+
+.admin-flash-sale .badge.bg-success {
+  background-color: #198754 !important;
+}
+
+.admin-flash-sale .badge.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.admin-flash-sale .badge.bg-secondary {
+  background-color: #6c757d !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-flash-sale {
+    padding: 15px 0;
+  }
+  
+  .admin-flash-sale .d-flex.justify-content-between {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .admin-flash-sale .table-responsive {
+    font-size: 0.9rem;
+  }
+  
+  .admin-flash-sale .d-flex.gap-2 {
+    flex-direction: column;
+    gap: 5px !important;
+  }
+  
+  .admin-flash-sale .d-flex.gap-2 .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .admin-flash-sale .modal-body {
+    padding: 20px;
+  }
+  
+  .admin-flash-sale .modal-footer {
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-flash-sale .card-header {
+    padding: 12px 15px;
+  }
+  
+  .admin-flash-sale .table th,
+  .admin-flash-sale .table td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+  
+  .admin-flash-sale .text-center.py-4 {
+    padding: 40px 15px !important;
+  }
+  
+  .admin-flash-sale .text-center.py-4 i {
+    font-size: 2.5rem !important;
+  }
+}

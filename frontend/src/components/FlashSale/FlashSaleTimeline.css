@@ -1,0 +1,295 @@
+.flash-sale-timeline {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.timeline-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.timeline-title i {
+  color: #ff6b6b;
+  font-size: 1.2rem;
+}
+
+.current-time {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.timeline-slots {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.timeline-slots::-webkit-scrollbar {
+  height: 6px;
+}
+
+.timeline-slots::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.timeline-slots::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.timeline-slots::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.timeline-slot {
+  position: relative;
+  min-width: 180px;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.timeline-slot.clickable {
+  cursor: pointer;
+}
+
+.timeline-slot.clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.timeline-slot.active {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  border-color: #ff6b6b;
+  color: white;
+}
+
+.timeline-slot.upcoming {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+  border-color: #74b9ff;
+  color: white;
+}
+
+.timeline-slot.ended {
+  background: #f1f3f4;
+  border-color: #dadce0;
+  color: #5f6368;
+  opacity: 0.7;
+}
+
+.timeline-slot.selected {
+  border-color: #ffd700;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+}
+
+.slot-time {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.slot-content {
+  text-align: center;
+}
+
+.slot-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.slot-header i {
+  font-size: 1rem;
+}
+
+.slot-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.slot-status {
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.slot-items-count {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.active-indicator {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+.pulse-dot {
+  width: 12px;
+  height: 12px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  animation: pulse-ring 1.5s infinite;
+}
+
+.selected-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ffd700;
+  color: #333;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border: 2px solid white;
+}
+
+.no-programs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 20px;
+  color: #666;
+  text-align: center;
+}
+
+.no-programs i {
+  font-size: 2rem;
+  color: #ccc;
+}
+
+.timeline-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.legend-icon {
+  font-size: 0.9rem;
+}
+
+.legend-icon.active {
+  color: #ff6b6b;
+}
+
+.legend-icon.upcoming {
+  color: #74b9ff;
+}
+
+.legend-icon.ended {
+  color: #999;
+}
+
+/* Animations */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .flash-sale-timeline {
+    padding: 15px;
+  }
+  
+  .timeline-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .timeline-title {
+    font-size: 1.2rem;
+  }
+  
+  .timeline-slots {
+    gap: 10px;
+  }
+  
+  .timeline-slot {
+    min-width: 150px;
+    padding: 12px;
+  }
+  
+  .slot-time {
+    font-size: 1rem;
+  }
+  
+  .slot-name {
+    font-size: 0.8rem;
+  }
+  
+  .timeline-legend {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-slot {
+    min-width: 130px;
+    padding: 10px;
+  }
+  
+  .timeline-legend {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}

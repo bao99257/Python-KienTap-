@@ -35,7 +35,7 @@
 //             <Nav className="ms-auto align-items-center">
 //               <LinkContainer to="/cart">
 //                 <Nav.Link className="text-dark nav-icon-link">
-//                   <i className="fas fa-shopping-cart me-1" /> 
+//                   <i className="fas fa-shopping-cart me-1" />
 //                 </Nav.Link>
 //               </LinkContainer>
 
@@ -43,7 +43,7 @@
 //                 <>
 //                   <LinkContainer to="/favorites">
 //                     <Nav.Link className="text-dark nav-icon-link">
-//                       <i className="fas fa-heart me-1" /> 
+//                       <i className="fas fa-heart me-1" />
 //                       {favorites.length > 0 && (
 //                         <Badge pill bg="danger" className="ms-1">
 //                           {favorites.length}
@@ -54,7 +54,7 @@
 
 //                   <LinkContainer to="/paybox">
 //                     <Nav.Link className="text-dark nav-icon-link">
-//                       <i className="fas fa-wallet me-1" /> 
+//                       <i className="fas fa-wallet me-1" />
 //                     </Nav.Link>
 //                   </LinkContainer>
 //                 </>
@@ -90,7 +90,7 @@
 //               ) : (
 //                 <LinkContainer to="/login">
 //                   <Nav.Link className="text-dark nav-icon-link">
-//                     <i className="fas fa-user me-1" /> 
+//                     <i className="fas fa-user me-1" />
 //                   </Nav.Link>
 //                 </LinkContainer>
 //               )}
@@ -128,13 +128,15 @@ function Header({ keyword, setKeyword }) {
         <Container>
           {/* Logo */}
           <LinkContainer to="/">
-            <Navbar.Brand className="navbar-brand text-dark">TNBH.COM</Navbar.Brand>
+            <Navbar.Brand className="navbar-brand text-dark">
+              TNBH.COM
+            </Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls="main-navbar" />
           <Navbar.Collapse id="main-navbar">
             {/* Menu Center */}
-           
+
             {/* Search Box */}
             <div className="search-container">
               <SearchBox keyword={keyword} setKeyword={setKeyword} />
@@ -180,6 +182,9 @@ function Header({ keyword, setKeyword }) {
                   </LinkContainer>
                   <LinkContainer to="/user/chat">
                     <NavDropdown.Item>Tư vấn</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/chatbot">
+                    <NavDropdown.Item>AI Chatbot</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   {userInfo.isAdmin && (

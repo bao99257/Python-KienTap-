@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'api',
     'channels',
     'chat',
+    'chatbot',
     'rest_framework_simplejwt.token_blacklist',
 ]
 
@@ -85,10 +86,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 ASGI_APPLICATION = 'backend.asgi.application'
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
 
@@ -99,13 +97,14 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce_db',       # hoặc tên DB của bạn
+        'NAME': 'kien_tapp',       # hoặc tên DB của bạn
         'USER': 'root',               # tên user MySQL
-        'PASSWORD': 'Kimthanh.123',   # mật khẩu MySQL
+        'PASSWORD': '123456',   # mật khẩu MySQL
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
         }
     }
 }
@@ -249,4 +248,3 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://127.0.0.1:3001",
 ]
-

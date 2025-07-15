@@ -8,12 +8,15 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
 
 import chat.routing
+import chatbot.routing
+from chatbot.middleware import JWTAuthMiddlewareStack
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),  # thêm dòng này để xử lý HTTP
-    "websocket": AuthMiddlewareStack(
+    "websocket": JWTAuthMiddlewareStack(
         URLRouter(
-            chat.routing.websocket_urlpatterns
+            chat.routing.websocket_urlpatterns +
+            chatbot.routing.websocket_urlpatterns
         )
     ),
 })

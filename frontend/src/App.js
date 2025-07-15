@@ -45,6 +45,7 @@ import { FavoriteProvider } from "./context/favoriteContext";
 // Other components
 import ProtectedRoute from "./components/ProtectedRoute";
 import UserChat from "./pages/UserChat";
+import ChatBotPage from "./pages/ChatBotPage";
 
 import "./App.css";
 
@@ -62,10 +63,12 @@ const AppContent = () => {
 
   return (
     <div>
-       <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} />
       <UserProvider>
         <PayboxProvider>
-          {!isAdminRoute && <Header keyword={keyword} setKeyword={setKeyword} />}
+          {!isAdminRoute && (
+            <Header keyword={keyword} setKeyword={setKeyword} />
+          )}
           <main className={isAdminRoute ? "" : "py-3"}>
             <ProductsProvider>
               <CartProvider>
@@ -74,36 +77,126 @@ const AppContent = () => {
                     <Container>
                       <Routes>
                         <Route path="/" element={<HomePage />} exact />
-                        <Route path="/search" element={<SearchPage keyword={keyword} />} />
+                        <Route
+                          path="/search"
+                          element={<SearchPage keyword={keyword} />}
+                        />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/profile" element={<ProfilePage />} />
                         <Route path="/paybox" element={<PayboxPage />} />
                         <Route path="/products/:id" element={<ProductPage />} />
-                        <Route path="/orders/:id" element={<OrderDetailsPage />} />
+                        <Route
+                          path="/orders/:id"
+                          element={<OrderDetailsPage />}
+                        />
                         <Route path="/payment" element={<PaymentPage />} />
                         <Route path="/shipping" element={<ShippingPage />} />
-                        <Route path="/confirmation" element={<ConfirmationPage />} />
-                        <Route path="/placeorder" element={<PlacerOrderPage />} />
+                        <Route
+                          path="/confirmation"
+                          element={<ConfirmationPage />}
+                        />
+                        <Route
+                          path="/placeorder"
+                          element={<PlacerOrderPage />}
+                        />
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/user/chat" element={<UserChat />} />
+                        <Route path="/chatbot" element={<ChatBotPage />} />
                         <Route path="/favorites" element={<FavoritesPage />} />
                       </Routes>
                     </Container>
                   ) : (
                     <Routes>
-                      <Route path="/admin" element={<ProtectedRoute adminOnly={true}><AdminDashboard /></ProtectedRoute>} />
-                      <Route path="/admin/products" element={<ProtectedRoute adminOnly={true}><AdminProducts /></ProtectedRoute>} />
-                      <Route path="/admin/orders" element={<ProtectedRoute adminOnly={true}><AdminOrders /></ProtectedRoute>} />
-                      <Route path="/admin/categories" element={<ProtectedRoute adminOnly={true}><AdminCategories /></ProtectedRoute>} />
-                      <Route path="/admin/users" element={<ProtectedRoute adminOnly={true}><AdminUsers /></ProtectedRoute>} />
-                      <Route path="/admin/brands" element={<ProtectedRoute adminOnly={true}><AdminBrands /></ProtectedRoute>} />
-                      <Route path="/admin/reviews" element={<ProtectedRoute adminOnly={true}><AdminReviews /></ProtectedRoute>} />
-                      <Route path="/admin/chat" element={<ProtectedRoute adminOnly={true}><AdminChat /></ProtectedRoute>} />
-                      <Route path="/admin/paybox" element={<ProtectedRoute adminOnly={true}><AdminPaybox /></ProtectedRoute>} />
-                      <Route path="/admin/refunds" element={<ProtectedRoute adminOnly={true}><AdminRefund /></ProtectedRoute>} />
-                      <Route path="/admin/coupons" element={<ProtectedRoute adminOnly={true}><AdminCoupons /></ProtectedRoute>} />
+                      <Route
+                        path="/admin"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminDashboard />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/products"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminProducts />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/orders"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminOrders />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/categories"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminCategories />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/users"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminUsers />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/brands"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminBrands />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/reviews"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminReviews />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/chat"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminChat />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/paybox"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminPaybox />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/refunds"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminRefund />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/admin/coupons"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminCoupons />
+                          </ProtectedRoute>
+                        }
+                      />
                     </Routes>
                   )}
                 </FavoriteProvider>

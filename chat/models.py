@@ -6,6 +6,7 @@ class ChatMessage(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sent_messages')
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    chat_mode = models.CharField(max_length=50, default='user_admin')
 
     def to_dict(self):
         return {

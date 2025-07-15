@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('user.urls')),  # Đảm bảo user.urls được include
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+    path('api/chatbot/', include('chatbot.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
