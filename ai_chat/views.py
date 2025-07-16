@@ -1,12 +1,13 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Count, Q
 from django.core.paginator import Paginator
+from django.core.cache import cache
 import uuid
 import logging
 
@@ -80,14 +81,30 @@ def debug_ai_chat(request):
 
 
 @api_view(['POST'])
+@permission_classes([])
 def test_product_search(request):
     """Test product search without authentication"""
     try:
         message = request.data.get('message', 'tìm áo')
 
-        # Test Smart AI response generation
-        from .smart_ai_service import smart_ai
-        response = smart_ai.process_message(message, None)
+        # Test Enhanced AI response generation
+        session_id = request.data.get('session_id')
+
+        # Use hybrid chatbot (reliable + smart)
+        from .hybrid_chatbot import hybrid_chatbot
+        user = request.user if request.user.is_authenticated else None
+        response = hybrid_chatbot.process_message(message, user=user, session_id=session_id)
+
+        # Debug log
+        logger.info(f"Hybrid chatbot response keys: {list(response.keys()) if isinstance(response, dict) else 'Not dict'}")
+        logger.info(f"Hybrid chatbot intent: {response.get('intent') if isinstance(response, dict) else 'N/A'}")
+
+        # Ensure response has correct structure
+        if isinstance(response, dict) and 'session_id' not in response:
+            response['session_id'] = session_id
+
+        # Debug: Check if response is being modified
+        logger.info(f"Final response before return: {response}")
 
         return Response({
             'status': 'success',
@@ -104,6 +121,204 @@ def test_product_search(request):
             'error': str(e),
             'traceback': traceback.format_exc(),
             'timestamp': timezone.now()
+        }, status=500)
+
+
+@api_view(['POST'])
+@permission_classes([])
+def test_smart_ai_direct(request):
+    """Test smart AI directly without any wrapper"""
+    try:
+        message = request.data.get('message', 'Xin chào!')
+        session_id = request.data.get('session_id', 'test123')
+
+        from .smart_ai_service import smart_ai
+        response = smart_ai.process_message(message, user=None, session_id=session_id)
+
+        return Response({
+            'status': 'success',
+            'message': message,
+            'session_id': session_id,
+            'direct_response': response,
+            'timestamp': timezone.now()
+        })
+
+    except Exception as e:
+        import traceback
+        return Response({
+            'status': 'error',
+            'error': str(e),
+            'traceback': traceback.format_exc(),
+            'timestamp': timezone.now()
+        }, status=500)
+
+
+# Ollama removed - using Gemini as primary AI service
+
+@api_view(['GET', 'POST'])
+@permission_classes([])
+def test_gemini_connection(request):
+    """Test Gemini AI connection and function calling"""
+    try:
+        from .gemini_service import gemini_service
+
+        # Basic availability check
+        is_available = gemini_service.is_available()
+
+        result = {
+            'available': is_available,
+            'model': gemini_service.model_name,
+            'api_key_configured': bool(gemini_service.api_key)
+        }
+
+        # Test với message nếu có
+        if request.method == 'POST' and is_available:
+            message = request.data.get('message', 'Tìm áo thun nam size L dưới 500k')
+
+            ai_response = gemini_service.generate_response(message)
+            result['test_message'] = message
+            result['ai_response'] = ai_response
+
+            # Test multiple scenarios
+            test_scenarios = [
+                'Xin chào!',
+                'Tìm áo thun',
+                'Có bao nhiêu sản phẩm?',
+                'Gợi ý outfit cho tôi'
+            ]
+
+            scenario_results = {}
+            for scenario in test_scenarios:
+                try:
+                    scenario_response = gemini_service.generate_response(scenario)
+                    scenario_results[scenario] = {
+                        'success': scenario_response['success'],
+                        'response_time': scenario_response.get('response_time', 0),
+                        'has_function_calls': len(scenario_response.get('function_calls', [])) > 0
+                    }
+                except Exception as e:
+                    scenario_results[scenario] = {'error': str(e)}
+
+            result['scenario_tests'] = scenario_results
+
+        return Response({
+            'status': 'success',
+            'gemini_test': result,
+            'timestamp': timezone.now()
+        })
+
+    except Exception as e:
+        import traceback
+        return Response({
+            'status': 'error',
+            'error': str(e),
+            'traceback': traceback.format_exc(),
+            'timestamp': timezone.now()
+        }, status=500)
+
+
+@api_view(['GET'])
+@permission_classes([])
+def ai_service_status(request):
+    """Get comprehensive AI service status"""
+    try:
+        from .gemini_service import gemini_service
+
+        status = {
+            'timestamp': timezone.now(),
+            'services': {
+                'gemini': {
+                    'available': gemini_service.is_available(),
+                    'api_key_configured': bool(gemini_service.api_key),
+                    'model': gemini_service.model_name,
+                    'config': {
+                        'temperature': gemini_service.temperature,
+                        'max_tokens': gemini_service.max_tokens
+                    }
+                }
+            },
+            'cache_stats': {
+                'gemini_availability': cache.get('gemini_availability')
+            },
+            'recommendations': []
+        }
+
+        # Add recommendations based on status
+        if not status['services']['gemini']['available']:
+            if not status['services']['gemini']['api_key_configured']:
+                status['recommendations'].append('Configure Gemini API key in .env file')
+            else:
+                status['recommendations'].append('Check Gemini API key validity')
+                status['recommendations'].append('Chatbot will use rule-based responses only')
+
+        if status['services']['gemini']['available']:
+            status['recommendations'].append('Gemini is primary AI service - optimal performance')
+        else:
+            status['recommendations'].append('No AI services available - chatbot will use rule-based responses only')
+
+        return Response({
+            'status': 'success',
+            'ai_status': status
+        })
+
+    except Exception as e:
+        import traceback
+        return Response({
+            'status': 'error',
+            'error': str(e),
+            'traceback': traceback.format_exc()
+        }, status=500)
+
+
+@api_view(['GET'])
+@permission_classes([])
+def api_documentation(request):
+    """Get comprehensive API documentation"""
+    try:
+        from .api_docs import get_api_documentation
+
+        docs = get_api_documentation()
+
+        return Response({
+            'status': 'success',
+            'documentation': docs,
+            'timestamp': timezone.now()
+        })
+
+    except Exception as e:
+        return Response({
+            'status': 'error',
+            'error': str(e)
+        }, status=500)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def test_enhanced_chat(request):
+    """Test endpoint for enhanced AI chat functionality"""
+    try:
+        message = request.data.get('message', 'Xin chào! Tìm áo thun nam size L dưới 500k')
+        session_id = request.data.get('session_id')
+
+        # Use Hybrid AI service (Production Ready)
+        from .hybrid_ai_service import hybrid_ai_service
+
+        user = request.user if request.user.is_authenticated else None
+        result = hybrid_ai_service.process_message(message, user)
+
+        return Response({
+            'status': 'success',
+            'message': message,
+            'ai_response': result,
+            'timestamp': timezone.now()
+        })
+
+    except Exception as e:
+        import traceback
+        return Response({
+            'status': 'error',
+            'error': str(e),
+            'traceback': traceback.format_exc()
         }, status=500)
 
 
@@ -134,9 +349,9 @@ class AIChatView(APIView):
             if not session_id:
                 session_id = str(uuid.uuid4())
 
-            # Sử dụng Smart AI Service
-            from .smart_ai_service import smart_ai
-            ai_response = smart_ai.process_message(user_message, request.user)
+            # Sử dụng Hybrid AI Service (Gemini + Logic)
+            from .hybrid_ai_service import hybrid_ai_service
+            ai_response = hybrid_ai_service.process_message(user_message, request.user)
 
             # Tạo response
             response_data = {

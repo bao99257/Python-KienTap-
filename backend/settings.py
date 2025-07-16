@@ -100,9 +100,9 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce_db',       # hoặc tên DB của bạn
+        'NAME': 'kien_tapp',       # hoặc tên DB của bạn
         'USER': 'root',               # tên user MySQL
-        'PASSWORD': 'Kimthanh.123',   # mật khẩu MySQL
+        'PASSWORD': '123456',   # mật khẩu MySQL
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -250,4 +250,37 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://127.0.0.1:3001",
 ]
+
+# Ollama removed - using Gemini as primary AI service
+
+# Google Gemini AI Configuration
+GEMINI_CONFIG = {
+    'API_KEY': os.getenv('GEMINI_API_KEY', ''),  # Bạn sẽ thêm API key vào đây
+    'MODEL': os.getenv('GEMINI_MODEL', 'gemini-1.5-flash'),  # Model miễn phí tốt nhất
+    'TEMPERATURE': float(os.getenv('GEMINI_TEMPERATURE', '0.7')),
+    'MAX_OUTPUT_TOKENS': int(os.getenv('GEMINI_MAX_TOKENS', '2048')),
+    'TOP_P': float(os.getenv('GEMINI_TOP_P', '0.8')),
+    'TOP_K': int(os.getenv('GEMINI_TOP_K', '40')),
+    'SYSTEM_INSTRUCTION': """Bạn là AI assistant thông minh của shop thời trang online tại Việt Nam.
+
+NHIỆM VỤ:
+- Hỗ trợ khách hàng tìm sản phẩm, tư vấn thời trang
+- Trả lời câu hỏi về shop, sản phẩm, chính sách
+- Sử dụng function calling để truy cập database khi cần
+
+PHONG CÁCH:
+- Thân thiện, chuyên nghiệp, nhiệt tình
+- Sử dụng tiếng Việt tự nhiên
+- KHÔNG dùng markdown formatting (**, *, #)
+- Dùng emoji phù hợp để tạo cảm xúc
+
+KHI KHÁCH HÀNG HỎI VỀ SẢN PHẨM:
+- Gọi function search_products để tìm kiếm
+- Hiển thị kết quả với giá, hình ảnh, link
+- Đưa ra gợi ý phù hợp
+
+KHI KHÔNG BIẾT THÔNG TIN:
+- Thành thật nói không biết
+- Gợi ý liên hệ hỗ trợ hoặc tìm kiếm khác"""
+}
 

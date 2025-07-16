@@ -7,6 +7,12 @@ urlpatterns = [
     path('debug/', views.debug_ai_chat, name='ai-debug'),
     path('test-search/', views.test_product_search, name='ai-test-search'),
 
+    path('test-gemini/', views.test_gemini_connection, name='ai-test-gemini'),
+    path('status/', views.ai_service_status, name='ai-service-status'),
+    path('docs/', views.api_documentation, name='ai-api-docs'),
+    path('test-enhanced/', views.test_enhanced_chat, name='ai-test-enhanced'),
+    path('test-smart-direct/', views.test_smart_ai_direct, name='ai-test-smart-direct'),
+
     # User endpoints (auth required)
     path('chat/', views.AIChatView.as_view(), name='ai-chat'),
     path('conversations/', views.ConversationHistoryView.as_view(), name='conversation-history'),
